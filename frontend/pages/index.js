@@ -9,10 +9,13 @@ import AddListingModal from '../components/Listing/AddListingModal'
 import EditListingModal from '../components/Listing/EditListingModal'
 import ReserveListingModal from '../components/Listing/ReserveListingModal'
 import { format } from 'date-fns'
+import { useWallet } from '@solana/wallet-adapter-react'
 
 
 export default function Home() {
-    const connected = true
+    //provjerva jesmo li spojeni, wallet adresa
+    const{connected,publicKey} = useWallet()
+
     const [showReservedListing, setShowReservedListing] = useState(false)
     const [listings, setListings] = useState(listingsData)
     const [addListingModalOpen, setAddListingModalOpen] = useState(false)
@@ -105,9 +108,9 @@ export default function Home() {
     return (
         <div>
             <Head>
-                <title>Airbnb Clone</title>
+                <title>Tracker.io</title>
             </Head>
-            <Header connected={connected}/>
+            <Header connected={connected} publicKey={publicKey}/>
             <main className="pt-10 pb-20">
                 <FilterMenu />
                 {connected && (

@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }) {
     return (
         <>
             <Head>
-                <title>Airbnb Clone</title>
+                <title>Tracker.io</title>
             </Head>
             <WalletConnectionProvider>
             <Component {...pageProps} />

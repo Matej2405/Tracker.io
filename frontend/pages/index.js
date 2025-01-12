@@ -15,6 +15,8 @@ import { useWallet } from '@solana/wallet-adapter-react'
 export default function Home() {
     //provjerva jesmo li spojeni, wallet adresa
     const{connected,publicKey} = useWallet()
+    const {initialized, initializeUser} = useAirbnb()
+    
 
     const [showReservedListing, setShowReservedListing] = useState(false)
     const [listings, setListings] = useState(listingsData)
@@ -110,7 +112,7 @@ export default function Home() {
             <Head>
                 <title>Tracker.io</title>
             </Head>
-            <Header connected={connected} publicKey={publicKey}/>
+            <Header connected={connected} publicKey={publicKey} initialized={initialized} initializeUser={initializeUser}/>
             <main className="pt-10 pb-20">
                 <FilterMenu />
                 {connected && (

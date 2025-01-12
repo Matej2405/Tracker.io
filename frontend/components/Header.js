@@ -4,6 +4,8 @@ import Image from 'next/image'
 import { truncate } from '../utils/string'
 require('@solana/wallet-adapter-react-ui/styles.css')
 function Header({ connected, publicKey, initializeUser , initialized, transactionPending}) {
+    
+    
     return (
         <header className="sticky top-0 transition-all md:grid md:grid-cols-3 items-center px-10 xl:px-20 py-4 z-50 bg-white border-b">
             <div>
@@ -41,6 +43,8 @@ function Header({ connected, publicKey, initializeUser , initialized, transactio
 
                     <UserCircleIcon className="h-8 w-8" />
                 </div>*/}
+        {initialized ? (<></>) : <button>Initialize user</button>}
+                
                 <WalletMultiButton className='phantom-button' startIcon={<UserCircleIcon style={{ height: 32, width: 32, color: '#1f2937' }} />}>
                  <span className='text-sm font-medium text-black'>{connected ? truncate(publicKey.toString()) : "Connect Wallet"}</span>
                  </WalletMultiButton>

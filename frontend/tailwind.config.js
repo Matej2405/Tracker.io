@@ -2,7 +2,11 @@
 module.exports = {
     content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
     theme: {
-        extend: {},
+        extend: {
+            spcaing: {
+                20: '5.5rem',
+            },
+        },
     },
     plugins: [require('tailwind-scrollbar-hide')],
 }

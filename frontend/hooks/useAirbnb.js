@@ -1,13 +1,14 @@
 import * as anchor from "@project-serum/anchor";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AIRBNB_PROGRAM_PUBKEY } from "../constants";
 import airbnbIDL from '../constants/airbnb.json';
 import { utf8 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 import { findProgramAddressSync } from "@project-serum/anchor/dist/cjs/utils/pubkey";
 import { useAnchorWallet, useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { PublicKey, SystemProgram } from "@solana/web3.js";
+import { SystemProgram } from "@solana/web3.js";
 
-export const useAirbnb = () => {
+
+const useAirbnb = () => {
     const { connection } = useConnection();
     const { publicKey } = useWallet();
     const anchorWallet = useAnchorWallet();
@@ -61,7 +62,7 @@ export const useAirbnb = () => {
                     program.programId
                 );
 
-                const tx = await program.methods.
+                
                 initializeUser()
                 .accounts(
                     {
@@ -81,3 +82,5 @@ export const useAirbnb = () => {
 
     return {initialized, initializeUser};
 };
+
+export default useAirbnb;

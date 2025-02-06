@@ -13,6 +13,7 @@ export const useAirbnb = () => {
     const anchorWallet = useAnchorWallet();
 
     const [initialized, setInitialized] = useState(false);
+    const [transactionPending, setTransactionPending] = useState(false);
     const program = useMemo(() => {
         if (anchorWallet) {
             const provider = new anchor.AnchorProvider(connection, anchorWallet, anchor.AnchorProvider.defaultOptions());
@@ -27,8 +28,9 @@ export const useAirbnb = () => {
     // Then fetch the listings
     useEffect(() => {
         const start = async () => {
-            if (program && publicKey) {
+            if (program && publicKey && !transactionPending) {
                 try {
+                    setTransactionPending(true);
                     const [profilePda] = findProgramAddressSync(
                         [utf8.encode("USER_STATE"), publicKey.toBuffer()],
                         program.programId
@@ -42,17 +44,18 @@ export const useAirbnb = () => {
                     }
                 } catch (e) {
                     console.error(e);
-                }
+                } 
             }
         };
         start();
-    }, [program, publicKey]);
+    }, [program, publicKey, transactionPending]);
 
 
     // Initialize the user
     const initializeUser = async () => {
         if(program && publicKey){
             try{
+                setTransactionPending(true);
                 const [profilePda] = findProgramAddressSync(
                     [utf8.encode("USER_STATE"), publicKey.toBuffer()],
                     program.programId
@@ -70,6 +73,8 @@ export const useAirbnb = () => {
                     setInitialized(true);
             }catch(e){
                 console.error(e);
+        } finally {
+            setTransactionPending(false);
         }
     }
 };

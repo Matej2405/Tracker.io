@@ -10,6 +10,7 @@ import EditListingModal from '../components/Listing/EditListingModal'
 import ReserveListingModal from '../components/Listing/ReserveListingModal'
 import { format } from 'date-fns'
 import { useWallet } from '@solana/wallet-adapter-react'
+import { useAirbnb } from '../hooks/useAirbnb'
 
 
 export default function Home() {

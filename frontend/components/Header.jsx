@@ -4,13 +4,14 @@ import { truncate } from '../utils/string';
 import React, { useState } from 'react';
 import listingsData from '../data/listings';
 import AddListingModal from './Listing/AddListingModal';
+import { PublicKey } from '@solana/web3.js';    
 
 require('@solana/wallet-adapter-react-ui/styles.css');
 
 function Header({ connected, publicKey, initializeUser, initialized, transactionPending }) {
     const [listings, setListings] = useState(listingsData);
     const [addListingModalOpen, setAddListingModalOpen] = useState(false);
-    const [createOrganizationModalOpen, setCreateOrganizationModalOpen] = useState(false);
+   
 
     const addListing = ({ location, country, price, description, imageURL }) => {
         console.log({ location, country, price, description, imageURL });
@@ -93,12 +94,7 @@ function Header({ connected, publicKey, initializeUser, initialized, transaction
                 addListingModalOpen={addListingModalOpen}
                 setAddListingModalOpen={setAddListingModalOpen}
             />
-
-            <AddListingModal
-                addListing={addListing}
-                addListingModalOpen={createOrganizationModalOpen}
-                setAddListingModalOpen={setCreateOrganizationModalOpen}
-            />
+            
         </header>
     );
 }

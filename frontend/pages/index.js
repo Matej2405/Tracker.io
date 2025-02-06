@@ -1,15 +1,16 @@
-import Head from 'next/head';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Listings from '../components/Listing/Listings';
-import { useMemo, useState, useEffect } from 'react';
-import listingsData from '../data/Listings';
-import AddListingModal from '../components/Listing/AddListingModal';
-import EditListingModal from '../components/Listing/EditListingModal';
-import ReserveListingModal from '../components/Listing/ReserveListingModal';
-import { format } from 'date-fns';
+import Head from 'next/head'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useAirbnb } from '../hooks/useAirbnb';
+import Listings from '../components/Listing/Listings'
+import { useMemo, useState } from 'react'
+import AddListingModal from '../components/Listing/AddListingModal'
+import EditListingModal from '../components/Listing/EditListingModal'
+import ReserveListingModal from '../components/Listing/ReserveListingModal'
+import { format } from 'date-fns'
+import listingsData from '../data/listings'
+import useAirbnb from '../hooks/useAirbnb'
+
 
 export default function Home() {
     const { connected, publicKey } = useWallet();
@@ -66,7 +67,6 @@ export default function Home() {
                         distance: listing.distance.km,
                         price: price || listing.price.perNight,
                         imageURL: imageURL || listing.imageURL,
-                        distance: listing.distance,
                     };
                 }
                 return listing;

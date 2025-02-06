@@ -1,4 +1,4 @@
-import { GlobeAmericasIcon, UserCircleIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import {  UserCircleIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { truncate } from '../utils/string';
 import React, { useState } from 'react';
@@ -43,7 +43,7 @@ function Header({ connected, publicKey, initializeUser, initialized, transaction
                         distance: listing.distance.km,
                         price: price || listing.price.perNight,
                         imageURL: imageURL || listing.imageURL,
-                        distance: listing.distance,
+                        
                     };
                 }
                 return listing;
@@ -61,7 +61,6 @@ function Header({ connected, publicKey, initializeUser, initialized, transaction
             <div className="flex-1 flex xl:justify-center px-6 transition-all duration-300">
                 <button className="flex-1 flex items-center justify-between border rounded-full p-2 w-[300px] shadow-sm hover:shadow-md transition-all">
                     <div className="flex items-center divide-x">
-                        
                        
                         <p className="text-gray-600 bg-transparent text-sm font-light px-4">Search for organizations</p>
                     </div>

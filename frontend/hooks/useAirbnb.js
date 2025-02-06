@@ -8,7 +8,7 @@ import { useAnchorWallet, useConnection, useWallet } from "@solana/wallet-adapte
 import { SystemProgram } from "@solana/web3.js";
 
 
-export const useAirbnb = () => {
+const useAirbnb = () => {
     const { connection } = useConnection();
     const { publicKey } = useWallet();
     const anchorWallet = useAnchorWallet();
@@ -82,3 +82,5 @@ export const useAirbnb = () => {
 
     return {initialized, initializeUser};
 };
+
+export default useAirbnb;

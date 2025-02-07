@@ -4,14 +4,13 @@ import { truncate } from '../utils/string';
 import React, { useState } from 'react';
 import listingsData from '../data/listings';
 import AddListingModal from './Listing/AddListingModal';
-import { PublicKey } from '@solana/web3.js';    
 
 require('@solana/wallet-adapter-react-ui/styles.css');
 
 function Header({ connected, publicKey, initializeUser, initialized, transactionPending }) {
     const [listings, setListings] = useState(listingsData);
     const [addListingModalOpen, setAddListingModalOpen] = useState(false);
-   
+    const [createOrganizationModalOpen, setCreateOrganizationModalOpen] = useState(false);
 
     const addListing = ({ location, country, price, description, imageURL }) => {
         console.log({ location, country, price, description, imageURL });
@@ -70,19 +69,9 @@ function Header({ connected, publicKey, initializeUser, initialized, transaction
             </div>
 
             <div className="flex items-center justify-end">
-                {connected ? (
-                    <div className="border border-transparent cursor-pointer hover:bg-gray-100 rounded-full px-3 py-2">
-                        <button onClick={() => setCreateOrganizationModalOpen(true)} className="text-sm font-medium transition-all duration-300 text-gray-800">
-                            Create your own organization
-                        </button>
-                    </div>
-                ) : (
-                    <div className="border border-transparent cursor-pointer hover:bg-gray-100 rounded-full px-3 py-2">
-                        <span className="text-sm font-medium transition-all duration-300 text-gray-800">
-                            Connect your wallet to create an organization now
-                        </span>
-                    </div>
-                )}
+            {initialized ? (<></>) : (<button type="button" className="border border-transparent cursor-pointer hover:bg-gray-100 rounded-full px-3 py-2" onClick={() => initializeUser()} disabled = {transactionPending}>
+                        Initialize
+                    </button>)}  
 
                 <WalletMultiButton className='phantom-button' startIcon={<UserCircleIcon style={{ height: 32, width: 32, color: '#1f2937' }} />}>
                     <span className='text-sm font-medium text-black'>{connected ? truncate(publicKey.toString()) : "Connect Wallet"}</span>
@@ -94,7 +83,12 @@ function Header({ connected, publicKey, initializeUser, initialized, transaction
                 addListingModalOpen={addListingModalOpen}
                 setAddListingModalOpen={setAddListingModalOpen}
             />
-            
+
+            <AddListingModal
+                addListing={addListing}
+                addListingModalOpen={createOrganizationModalOpen}
+                setAddListingModalOpen={setCreateOrganizationModalOpen}
+            />
         </header>
     );
 }

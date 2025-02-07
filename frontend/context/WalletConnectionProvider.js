@@ -2,8 +2,7 @@ import {ConnectionProvider, WalletProvider} from '@solana/wallet-adapter-react';
 import {WalletModalProvider} from '@solana/wallet-adapter-react-ui';
 import {SolflareWalletAdapter} from '@solana/wallet-adapter-wallets';
 import {useMemo} from 'react';
-const connection =  "https://solemn-snowy-mansion.solana-devnet.quiknode.pro/8853469d8531aa21ab6b627b91fc1074561916a0";
-
+const connection =  "https://api.devnet.solana.com";
 const WalletConnectionProvider = ({children}) => {
     // our endping for the wallet
     const endpoint = useMemo(() => connection, [])

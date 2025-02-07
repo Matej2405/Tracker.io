@@ -15,7 +15,7 @@ import useAirbnb from '../hooks/useAirbnb'
 export default function Home() {
     const { connected, publicKey } = useWallet();
     const { initialized, initializeUser } = useAirbnb();
-
+    
     const [showReservedListing, setShowReservedListing] = useState(false);
     const [listings, setListings] = useState(listingsData);
     const [addListingModalOpen, setAddListingModalOpen] = useState(false);

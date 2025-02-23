@@ -13,8 +13,13 @@ import useAirbnb from '../hooks/useAirbnb'
 
 
 export default function Home() {
+
+    const {initializeUser, organizations, organizationMembers, initialized, addOrganization} = useAirbnb();
+
+
+
+
     const { connected, publicKey } = useWallet();
-    const { initialized, initializeUser } = useAirbnb();
     
     const [showReservedListing, setShowReservedListing] = useState(false);
     const [listings, setListings] = useState(listingsData);
@@ -123,8 +128,8 @@ export default function Home() {
                         <button onClick={toggleShowReservedListing} className="border rounded-lg p-4 text-xs font-medium">
                             {showReservedListing ? 'Reserved' : 'All'}
                         </button>
-                        <button onClick={toggleShowReservedListing} className="border rounded-lg p-4 text-xs font-medium">
-                            {showReservedListing ? 'Reserved' : 'All'}
+                        <button onClick={() => setAddListingModalOpen(true)} className = "border rounded-lg p-4 text-xs font-medium">
+                            Create your own organization                           
                         </button>
                         
                     </div>
@@ -140,7 +145,7 @@ export default function Home() {
                     unreserveListing={unreserveListing}
                 />
 
-                <AddListingModal addListing={addListing} addListingModalOpen={addListingModalOpen} setAddListingModalOpen={setAddListingModalOpen} />
+                <AddListingModal addOrganization={addOrganization} addListingModalOpen={addListingModalOpen} setAddListingModalOpen={setAddListingModalOpen} />
                 <EditListingModal editListing={editListing} currentEditListing={currentEditListing} editListingModalOpen={editListingModalOpen} setEditListingModalOpen={setEditListingModalOpen} />
                 <ReserveListingModal reserveListing={reserveListing} reserveListingModalOpen={reserveListingModalOpen} setReserveListingModalOpen={setReserveListingModalOpen} />
             </main>

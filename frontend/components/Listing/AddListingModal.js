@@ -1,11 +1,13 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
+import useAirbnb from '../../hooks/useAirbnb'
 
-export default function AddListingModal({ addListing, addListingModalOpen, setAddListingModalOpen }) {
-    const [location, setLocation] = useState('')
-    const [country, setCountry] = useState('')
-    const [price, setPrice] = useState(0)
-    const [imageURL, setImageURL] = useState('')
+export default function AddListingModal({ addAirbnb, addListingModalOpen, setAddListingModalOpen }) {
+    const  { addOrganization } = useAirbnb()
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
+    const [maxMemberNumber, setmaxMemberNumber] = useState(0)
+    const [logo, setLogo] = useState('')
 
     const closeModal = () => {
         setAddListingModalOpen(false)
@@ -14,11 +16,11 @@ export default function AddListingModal({ addListing, addListingModalOpen, setAd
     const onCreate = (e) => {
         e.preventDefault()
 
-        addListing({
-            location,
-            country,
-            price,
-            imageURL,
+        addOrganization({
+            name,
+            description,
+            maxMemberNumber,
+            logo,
         })
 
         closeModal()
@@ -36,29 +38,29 @@ export default function AddListingModal({ addListing, addListingModalOpen, setAd
                         <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
                             <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                                 <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                                    Add Listing
+                                    Create an organization
                                 </Dialog.Title>
 
                                 <div className="mt-2">
                                     <div className="grid grid-cols-1 gap-3">
-                                        <label className="flex flex-col border rounded-lg px-3 py-2" htmlFor="location">
-                                            <span className="text-xs font-light">Location</span>
-                                            <input onChange={(e) => setLocation(e.target.value)} className="outline-none bg-transparent text-sm pt-1" type="text" id="location" name="location" />
+                                        <label className="flex flex-col border rounded-lg px-3 py-2" htmlFor="name">
+                                            <span className="text-xs font-light">Name</span>
+                                            <input onChange={(e) => setName(e.target.value)} className="outline-none bg-transparent text-sm pt-1" type="text" id="name" name="name" />
                                         </label>
 
-                                        <label className="flex flex-col border rounded-lg px-3 py-2" htmlFor="country">
-                                            <span className="text-xs font-light">Country</span>
-                                            <input onChange={(e) => setCountry(e.target.value)} className="outline-none bg-transparent text-sm pt-1" type="text" id="country" name="country" />
+                                        <label className="flex flex-col border rounded-lg px-3 py-2" htmlFor="description">
+                                            <span className="text-xs font-light">Description</span>
+                                            <input onChange={(e) => setDescription(e.target.value)} className="outline-none bg-transparent text-sm pt-1" type="text" id="description" name="description" />
                                         </label>
 
-                                        <label className="flex flex-col border rounded-lg px-3 py-2" htmlFor="price">
-                                            <span className="text-xs font-light">Price</span>
-                                            <input onChange={(e) => setPrice(e.target.value)} className="outline-none bg-transparent text-sm pt-1" type="number" id="price" name="price" />
+                                        <label className="flex flex-col border rounded-lg px-3 py-2" htmlFor="maxMemberNumber">
+                                            <span className="text-xs font-light">Maximum number of members</span>
+                                            <input onChange={(e) => setmaxMemberNumber(e.target.value)} className="outline-none bg-transparent text-sm pt-1" type="number" id="maxMemberNumber" name="maxMemberNumber" />
                                         </label>
 
-                                        <label className="flex flex-col border rounded-lg px-3 py-2" htmlFor="imageURL">
-                                            <span className="text-xs font-light">Image URL</span>
-                                            <input onChange={(e) => setImageURL(e.target.value)} className="outline-none bg-transparent text-sm pt-1" type="text" id="imageURL" name="imageURL" />
+                                        <label className="flex flex-col border rounded-lg px-3 py-2" htmlFor="logo">
+                                            <span className="text-xs font-light">Logo</span>
+                                            <input onChange={(e) => setLogo(e.target.value)} className="outline-none bg-transparent text-sm pt-1" type="text" id="logo" name="logo" />
                                         </label>
                                     </div>
 

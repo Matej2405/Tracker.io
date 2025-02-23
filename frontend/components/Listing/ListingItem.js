@@ -32,7 +32,7 @@ function ListingItem({ idx, publickey, connected, showReservedListing,location,c
             <div>
                 <div className="flex justify-between items-center">
                     <h3 className="font-medium">
-                        {location}, {country}
+                        {location} {country}
                     </h3>
 
                     <div className="flex items-center space-x-1">
@@ -41,13 +41,13 @@ function ListingItem({ idx, publickey, connected, showReservedListing,location,c
                     </div>
                 </div>
 
-                <p className="text-sm font-light text-gray-600">{788} kilometers</p>
+               
 
                 {showReservedListing && <p className="text-sm font-light text-gray-600">{date}</p>}
 
                 <p className="text-sm font-light text-gray-800 mt-2">
-                    <span className="text-base font-medium">RM {price}</span>
-                    &nbsp;night
+                    <span className="text-base font-medium">Current number of members: {price}</span>
+                    &nbsp;
                 </p>
             </div>
         </div>

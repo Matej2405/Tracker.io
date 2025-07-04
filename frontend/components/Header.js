@@ -4,6 +4,9 @@ import { truncate } from '../utils/string';
 import React, { useState } from 'react';
 import listingsData from '../data/listings';
 import AddListingModal from './Listing/AddListingModal';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
+
 
 require('@solana/wallet-adapter-react-ui/styles.css');
 
@@ -11,6 +14,8 @@ function Header({ connected, publicKey, initializeUser, initialized, transaction
     const [listings, setListings] = useState(listingsData);
     const [addListingModalOpen, setAddListingModalOpen] = useState(false);
     const [createOrganizationModalOpen, setCreateOrganizationModalOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+     const [user, setUser] = useState(null);
 
     const addListing = ({ location, country, price, description, imageURL }) => {
         console.log({ location, country, price, description, imageURL });
@@ -50,33 +55,76 @@ function Header({ connected, publicKey, initializeUser, initialized, transaction
             })
         );
     };
+    const filteredListings = listings.filter((listing) =>
+    listing.location.toLowerCase().includes(searchTerm.toLowerCase())
+);
+const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    console.log('Searching for:', searchTerm);
+    setSearchTerm('');
+};
+
 
     return (
         <header className="sticky top-0 transition-all md:grid md:grid-cols-3 items-center px-10 xl:px-20 py-4 z-50 bg-white border-b">
             <div className="relative">
-                <h1 className='text-purple-500 font-jakarta font-bold text-[36px]'>Tracker</h1>
-                <h2 className='text-purple-500 font-jakarta font-bold text-[12px] absolute top-0.5 left-20 px-11 py-1'>io</h2>
+                <img 
+                    src = "/assets/logo.png" 
+                    alt="Tracker.io Logo" 
+                    className="h-16 w-16 object-contain" 
+                    style={{ transform: 'scale(3)' }}
+                />
             </div>
 
             <div className="flex-1 flex xl:justify-center px-6 transition-all duration-300">
-                <button className="flex-1 flex items-center justify-between border rounded-full p-2 w-[300px] shadow-sm hover:shadow-md transition-all">
-                    <div className="flex items-center divide-x">
-                       
-                        <p className="text-gray-600 bg-transparent text-sm font-light px-4">Search for organizations</p>
-                    </div>
-                    <MagnifyingGlassIcon className="h-8 w-8 bg-purple-500 text-white stroke-[3.5px] p-2 rounded-full" />
-                </button>
+                 <form className="flex-1 flex items-center justify-between border rounded-full p-2 w-[300px] shadow-sm hover:shadow-md transition-all">
+                <input
+            type="text"
+            placeholder="Search for organizations"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="flex-1 px-4 bg-transparent text-gray-600 text-sm font-light focus:outline-none"
+                />
+        <button type="submit">
+            <MagnifyingGlassIcon className="h-8 w-8 bg-purple-500 text-white stroke-[3.5px] p-2 rounded-full" />
+        </button>
+    </form>
+</div>
+        <div className = "flex items-center space-x-2">
+
+      
+        <div className = "w-40 h-auto">
+
+        
+             {!user ? (
+                <GoogleLogin
+                    onSuccess={credentialResponse => {
+                        const decoded = jwtDecode(credentialResponse.credential);
+                        console.log('User Info:', decoded);
+                        setUser(decoded);
+                    }}
+                    onError={() => {
+                        console.log('Login Failed');
+                    }}
+                />
+            ) : (
+                <div className="flex items-center space-x-2">
+                    <img
+                        src={user.picture}
+                        alt="Profile"
+                        className="w-8 h-8 rounded-full"
+                    />
+                    <span>{user.name}</span>
+                </div>
+            )}
             </div>
 
-            <div className="flex items-center justify-end">
-            {initialized ? (<></>) : (<button type="button" className="border border-transparent cursor-pointer hover:bg-gray-100 rounded-full px-3 py-2" onClick={() => initializeUser()} disabled = {transactionPending}>
-                        Initialize
-                    </button>)}  
-
-                <WalletMultiButton className='phantom-button' startIcon={<UserCircleIcon style={{ height: 32, width: 32, color: '#1f2937' }} />}>
+            <div className="flex items-center justify-self-end space-x-2 max-w-fit">
+                <WalletMultiButton className='phantom-button' startIcon={<UserCircleIcon style={{ height: 32, width: 32, color: 'white' }} />}>
                     <span className='text-sm font-medium text-black'>{connected ? truncate(publicKey.toString()) : "Connect Wallet"}</span>
                 </WalletMultiButton>
             </div>
+              </div>
 
             <AddListingModal
                 addListing={addListing}
